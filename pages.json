@@ -1,0 +1,184 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/mine/index",
+			"style": {
+				"navigationStyle": "custom"
+				// "navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/virtual/index",
+			"style": {
+				"navigationBarTitleText": "虚拟体验",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/virtual/ems",
+			"style": {
+				"navigationBarTitleText": "智能脉冲刺激仪",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/device/control",
+			// "style": {
+			// 	"navigationStyle": "custom",
+			// 	"navigationBarTextStyle": "black"
+			// },
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/device/add",
+			"style": {
+				"navigationBarTitleText": "添加设备",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/device/pair",
+			// "style": {
+			// 	"navigationStyle": "custom"
+			// }
+			"style": {
+				"navigationBarTitleText": "智能脉冲刺激仪",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/games/index",
+			"style": {
+				"navigationBarTitleText": "益智休闲",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/games/puzzle",
+			"style": {
+				"navigationBarTitleText": "新品拼图",
+				"navigationBarBackgroundColor": "#4CAF50",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/games/game2048",
+			"style": {
+				"navigationBarTitleText": "2048",
+				"navigationBarBackgroundColor": "#FF9800",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/games/flip",
+			"style": {
+				"navigationBarTitleText": "翻翻看",
+				"navigationBarBackgroundColor": "#2196F3",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/settings/index",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/settings/profile",
+			"style": {
+				"navigationBarTitleText": "个人资料",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/service/index",
+			"style": {
+				"navigationBarTitleText": "客服",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/about/index",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/about/terms",
+			"style": {
+				"navigationBarTitleText": "用户数据协议",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/about/privacy",
+			"style": {
+				"navigationBarTitleText": "隐私协议",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/manual/index",
+			"style": {
+				"navigationBarTitleText": "蓝牙说明书",
+				"navigationBarBackgroundColor": "#802257",
+				"navigationBarTextStyle": "white"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#802257",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/tab/home.png",
+				"selectedIconPath": "static/tab/home-active.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/mine/index",
+				"iconPath": "static/tab/mine.png",
+				"selectedIconPath": "static/tab/mine-active.png",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "蓝牙智能",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F5F5F5"
+	},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@/uni_modules/uni-$1/components/uni-$1/uni-$1.vue"
+		}
+	}
+}

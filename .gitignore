@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+unpackage/
+dist/
+
+# Editor directories and files
+.idea/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
+
+# HBuilderX specific
+.hbuilderx/
+
+# Local env files (optional)
+.env.local
+.env.*.local
+
+# Backup files (if any)
+*.backup

@@ -1,0 +1,429 @@
+
+## 接口基础信息
+
+- **API 基础地址**: http://localhost:8000/api
+- **认证方式**: JWT Token
+- **请求头**: Authorization: Bearer <token>
+- **响应格式**: JSON
+- **状态码**: 200 成功, 其他 失败
+
+
+## 一、认证相关接口
+
+### 1.1 会员登录（自动注册）
+- **请求方法**: POST
+- **接口路径**: /api/member/login
+- **功能描述**: 手机号+微信昵称自动注册登录，如果用户不存在则自动创建账号
+- **请求参数**:
+  ```json
+  {
+    "code": "", //不能为空，由微信小程序前端通过 wx.login() 接口获取的、一次性的临时凭证  例如 0a1b2c3d4e5f6g7h8i9j
+    "wechat": "hongshuo2020",
+    "phone": "13800138001",
+    "nickname": "微信昵称",
+    "avatar": "https://wx.qlogo.cn/mmopen/xxx.jpg",
+    "gender": 1
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "登录成功",
+    "data": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+	  "refresh_token": "rt_4_1774449252_90bbd6b8be2674ccb9de17fafe30f3d4",
+	  "expires_in": 7200,
+      "member": {
+        "id": 1,
+        "phone": "13800138001",
+        "nickname": "微信昵称",
+        "avatar": "https://wx.qlogo.cn/mmopen/xxx.jpg",
+        "gender": 1,
+        "email": "test@example.com",
+        "status": 1
+      }
+    }
+  }
+  ```
+
+### 1.2 刷新令牌
+- **请求方法**: POST
+- **接口路径**: /api/member/refreshToken
+- **功能描述**: 刷新认证令牌
+- **请求参数**: 
+```json
+  {
+    "refresh_token": "rt_4_1774449252_90bbd6b8be2674ccb9de17fafe30f3d4",
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "刷新成功",
+    "data": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+	  "refresh_token": "rt_4_1774449252_90bbd6b8be2674ccb9de17fafe30f3d4",
+	  "expires_in": 7200
+    }
+  }
+  ```
+
+### 1.3 会员登出
+- **请求方法**: POST
+- **接口路径**: /api/logout
+- **功能描述**: 会员退出登录，清除令牌
+- **请求参数**: 无
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "登出成功",
+    "data": null
+  }
+  ```
+
+## 二、会员信息接口（需要认证）
+
+需要登录认证的接口需要在header中增加字段Authorization，值为登录获取的token:
+  Authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  
+### 2.1 获取会员信息
+- **请求方法**: GET
+- **接口路径**: /api/member/profile
+- **功能描述**: 获取当前登录会员的详细信息
+- **请求参数**: 无
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "获取成功",
+    "data": {
+      "id": 1,
+      "phone": "13800138001",
+      "nickname": "测试用户",
+      "email": "test@example.com",
+      "gender": 1,
+      "avatar": "https://example.com/avatar.jpg",
+      "address": "北京市朝阳区",
+      "status": 1,
+      "last_login_time": 1710681600,
+      "create_time": 1710681600
+    }
+  }
+  ```
+
+### 2.2 更新会员信息
+- **请求方法**: PUT POST
+- **接口路径**: /api/member/updateProfile
+- **功能描述**: 更新会员个人信息
+- **请求参数**:
+  ```json
+  {
+    "nickname": "新昵称",
+    "email": "new@example.com",
+    "gender": 2,
+    "avatar": "https://example.com/new_avatar.jpg",
+    "address": "上海市浦东新区",
+	"height":180.5,
+	"weight":120.2,
+	"blood_pressure":120,
+	"blood_sugar":120,
+	"heart_rate":120,
+	"body_temperature":120
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "更新成功",
+    "data": {
+      "id": 1,
+      "phone": "13800138001",
+      "nickname": "测试用户",
+      "email": "test@example.com",
+      "gender": 1,
+      "avatar": "https://example.com/avatar.jpg",
+      "address": "北京市朝阳区",
+      "status": 1,
+      "last_login_time": 1710681600,
+      "create_time": 1710681600
+    }
+  }
+  ```
+
+
+////////////////////////注意路径中的devices改为device了/////////////////////////////////
+
+
+## 三、设备管理接口（需要认证）
+
+### 3.1 获取我的设备列表
+- **请求方法**: GET
+- **接口路径**: /api/device
+- **功能描述**: 获取当前会员绑定的所有设备
+- **请求参数**:无
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "获取成功",
+    "data": {
+      "list": [
+        {
+          "id": 1,
+          "serial_number": "SN001",
+          "device_name": "智能手环A",
+          "device_model": "Model-A",
+          "mac_address": "00:1B:44:11:3A:B7",
+          "firmware_version": "v1.0.0",
+          "battery": 85,
+          "status": 1,
+          "connection_status": 1,
+          "last_battery_update": 1710681600,
+          "last_active_time": 1710681600,
+          "create_time": 1710681600
+        }
+      ],
+      "total": 1,
+      "page": 1,
+      "limit": 10
+    }
+  }
+  ```
+
+### 3.2 获取设备详细信息
+- **请求方法**: POST
+- **接口路径**: /api/device/detail
+- **功能描述**: 获取指定设备的详细信息
+- **请求参数**: 
+```json
+  {
+    "device_id": 1
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "获取成功",
+    "data": {
+      "id": 1,
+      "serial_number": "SN001",
+      "device_name": "智能手环A",
+      "device_model": "Model-A",
+      "mac_address": "00:1B:44:11:3A:B7",
+      "firmware_version": "v1.0.0",
+      "battery": 85,
+      "status": 1,
+      "connection_status": 1,
+      "last_battery_update": 1710681600,
+      "last_active_time": 1710681600,
+      "create_time": 1710681600
+    }
+  }
+  ```
+
+### 3.3 绑定设备
+- **请求方法**: POST
+- **接口路径**: /api/device/bind
+- **功能描述**: 会员绑定新设备
+- **请求参数**:
+  ```json
+  {
+    "serial_number": "SN001",
+    "device_name": "我的智能手环"
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "绑定成功",
+    "data": {
+      "device_id": 1,
+      "serial_number": "SN001",
+      "device_name": "我的智能手环"
+    }
+  }
+  ```
+
+### 3.4 解绑设备
+- **请求方法**: POST
+- **接口路径**: /api/device/unbind
+- **功能描述**: 解除设备绑定
+- **请求参数**: 
+```json
+  {
+    "device_id": 1
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "解绑成功",
+    "data": null
+  }
+  ```
+
+### 3.5 更新电池状态
+- **请求方法**: POST
+- **接口路径**: /api/device/updateBattery
+- **功能描述**: 更新设备电池电量
+- **请求参数**:
+  ```json
+  {
+	"device_id": 1,
+    "battery": 80
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "电量更新成功",
+    "data": {
+        "device_id": "4",
+        "battery": 40,
+        "level": "low",
+        "last_update": 1774625494
+    }
+  }
+  ```
+
+### 3.6 更新连接状态
+- **请求方法**: POST
+- **接口路径**: /api/device/updateConnection
+- **功能描述**: 更新设备连接状态
+- **请求参数**:
+  ```json
+  {
+	"device_id": 1,
+    "connection_status": 1
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "更新成功",
+    "data": {
+      "device_id": 1,
+      "connection_status": 1
+    }
+  }
+  ```
+
+### 3.7 同步设备数据
+- **请求方法**: POST
+- **接口路径**: /api/device/syncData
+- **功能描述**: 同步设备数据到服务器
+- **请求参数**:
+  ```json
+  {
+	"device_id": 1,
+    "data": {
+      "heart_rate": 75,
+      "steps": 5000,
+      "sleep_time": 420,
+      "calories": 300
+    }
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "同步成功",
+	"data": {
+      "sync_count": 75,
+      "sync_time": 1774323740
+    }
+  }
+  ```
+
+
+## 五、广告相关接口
+
+### 5.1 获取指定位置的广告
+- **请求方法**: GET
+- **接口路径**: /api/ad/getBanner
+- **功能描述**: 获取指定位置的广告列表
+- **请求参数**:无
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "获取成功",
+    "data": [
+      {
+        "id": 1,
+        "title": "首页轮播广告1",
+        "image_url": "https://example.com/banner1.jpg",
+        "target_url": "https://example.com/product1"
+      }
+    ]
+  }
+  ```
+
+### 5.2 记录广告点击（需要认证）
+- **请求方法**: POST
+- **接口路径**: /api/ad/click
+- **功能描述**: 记录广告点击次数
+- **请求参数**: 
+  ```json
+  {
+    "id": 1
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "记录成功",
+    "data": {
+		"target_url": "https://example.com/product1",
+		"click_count": 1
+	  }
+  }
+  ```
+
+## 六、通用响应格式
+
+### 成功响应
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    // 响应数据
+  }
+}
+```
+
+### 错误响应
+```json
+{
+  "code": 400,
+  "msg": "错误信息",
+  "data": null
+}
+```
+
+## 七、错误码说明
+
+| 错误码 | 说明 |
+|--------|------|
+| 400 | 请求参数错误 |
+| 401 | 未授权，请登录 |
+| 403 | 拒绝访问 |
+| 404 | 请求的资源不存在 |
+| 405 | 请求方法错误 |
+| 500 | 服务器内部错误 |
+| 501 | 功能未实现 |
+| 502 | 网关错误 |
+| 503 | 服务不可用 |
+| 504 | 网关超时 |

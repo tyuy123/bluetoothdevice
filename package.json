@@ -1,0 +1,9 @@
+{
+  "name": "lf-ai",
+  "version": "1.0.0",
+  "description": "蓝牙智能 UniApp 微信小程序",
+  "private": true,
+  "dependencies": {
+    "pinia": "^2.1.7"
+  }
+}
